@@ -45,19 +45,12 @@ class _ContextMenuDetectorState extends State<_ContextMenuDetector> {
 
   static final _mutex = Mutex();
 
-  bool _acceptPrimaryButton() {
-    final keys = HardwareKeyboard.instance.logicalKeysPressed;
-    return defaultTargetPlatform == TargetPlatform.macOS &&
-        keys.length == 1 &&
-        keys.contains(LogicalKeyboardKey.controlLeft);
-  }
-
   bool _canAcceptEvent(PointerDownEvent event) {
     if (event.kind != PointerDeviceKind.mouse) {
       return false;
     }
     if (event.buttons == kSecondaryButton ||
-        event.buttons == kPrimaryButton && _acceptPrimaryButton()) {
+        event.buttons == kPrimaryButton) {
       return widget.contextMenuIsAllowed(event.position);
     }
 
